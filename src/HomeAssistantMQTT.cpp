@@ -42,12 +42,12 @@ void HomeAssistantMQTTDevice::refresh() {
     this->attributesDirty = true;
 }
 
-String HomeAssistantMQTTDevice::makeMQTTTopic(const String &topic) const {
+const String HomeAssistantMQTTDevice::getMQTTTopic(const String &topic) const {
     return this->mqttTopicBase + "/" + topic;
 }
 
-String HomeAssistantMQTTDevice::makeMQTTCommandTopic() const {
-    return this->makeMQTTTopic(HA_COMMAND_SUFFIX);
+const String HomeAssistantMQTTDevice::getMQTTCommandTopic() const {
+    return this->getMQTTTopic(HA_COMMAND_SUFFIX);
 }
 
 void HomeAssistantMQTTDevice::loop(PubSubClient &mqtt) {
@@ -56,7 +56,7 @@ void HomeAssistantMQTTDevice::loop(PubSubClient &mqtt) {
 
     if (this->configDirty) {
         serializeJson(this->configDoc, buf);
-        mqtt.publish(this->makeMQTTTopic(HA_CONFIG_SUFFIX).c_str(), buf);
+        mqtt.publish(this->getMQTTTopic(HA_CONFIG_SUFFIX).c_str(), buf);
         this->configDirty = false;
         this->lastConfigUpdate = now;
     }
@@ -67,12 +67,12 @@ void HomeAssistantMQTTDevice::loop(PubSubClient &mqtt) {
 
     if (this->attributesDirty) {
         serializeJson(this->attributesDoc, buf);
-        mqtt.publish(this->makeMQTTTopic(HA_ATTRIBUTES_SUFFIX).c_str(), buf);
+        mqtt.publish(this->getMQTTTopic(HA_ATTRIBUTES_SUFFIX).c_str(), buf);
         this->attributesDirty = false;
     }
 
     if (this->stateDirty) {
-        mqtt.publish(this->makeMQTTTopic(HA_STATE_SUFFIX).c_str(), this->state.c_str());
+        mqtt.publish(this->getMQTTTopic(HA_STATE_SUFFIX).c_str(), this->state.c_str());
         this->stateDirty = false;
     }
 }

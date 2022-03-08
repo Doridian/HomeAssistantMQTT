@@ -30,9 +30,6 @@ class HomeAssistantMQTTDevice
         void refresh();
 
         void setState(const String &state);
-        
-        StaticJsonDocument<HA_JSON_MAX_SIZE> configDoc;
-        StaticJsonDocument<HA_JSON_MAX_SIZE> attributesDoc;
 
         template <typename T>
         void setAttribute(const String& name, const T& src) {
@@ -46,8 +43,8 @@ class HomeAssistantMQTTDevice
             this->configDirty = true;
         }
 
-        String makeMQTTTopic(const String &topic) const;
-        String makeMQTTCommandTopic() const;
+        const String getMQTTTopic(const String &topic) const;
+        const String getMQTTCommandTopic() const;
 
     protected:
         bool stateDirty;
@@ -61,6 +58,9 @@ class HomeAssistantMQTTDevice
         String state;
 
         unsigned long lastConfigUpdate;
+    
+        StaticJsonDocument<HA_JSON_MAX_SIZE> configDoc;
+        StaticJsonDocument<HA_JSON_MAX_SIZE> attributesDoc;
 };
 
 #endif
