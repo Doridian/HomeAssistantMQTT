@@ -1,0 +1,19 @@
+{
+    "name":"HomeAssistantMQTT",
+    "description":"A library that provides tools to simplify MQTT discovery implementation for Home Assistant",
+    "keywords":"mqtt,wifi,iot,homeassistant",
+    "authors": [
+      {
+        "name": "Mark Dietzer",
+        "maintainer": true
+      }
+    ],
+    "repository":
+    {
+      "type": "git",
+      "url": "https://github.com/Doridian/HomeAssistantMQTT.git"
+    },
+    "version": "1.0.0",
+    "frameworks": "arduino",
+    "platforms": ["espressif8266", "espressif32"]
+  }
